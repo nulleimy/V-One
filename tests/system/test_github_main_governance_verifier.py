@@ -20,7 +20,7 @@ BRANCH_SHA = "a" * 40
 def baseline() -> dict[str, object]:
     return {
         "schema": "vone.github-main-governance/v1",
-        "repository": "eimyroot/V-One",
+        "repository": "eimyroot/Voodoo-One",
         "branch": "main",
         "desired": {
             "pull_request_required": True,
@@ -42,14 +42,14 @@ def passing_rules() -> list[dict[str, object]]:
         {
             "type": "pull_request",
             "ruleset_source_type": "Repository",
-            "ruleset_source": "nulleimy/V-One",
+            "ruleset_source": "eimyroot/Voodoo-One",
             "ruleset_id": 17,
             "parameters": {"required_review_thread_resolution": True},
         },
         {
             "type": "required_status_checks",
             "ruleset_source_type": "Repository",
-            "ruleset_source": "nulleimy/V-One",
+            "ruleset_source": "eimyroot/Voodoo-One",
             "ruleset_id": 17,
             "parameters": {
                 "strict_required_status_checks_policy": True,
@@ -61,13 +61,13 @@ def passing_rules() -> list[dict[str, object]]:
         {
             "type": "non_fast_forward",
             "ruleset_source_type": "Repository",
-            "ruleset_source": "nulleimy/V-One",
+            "ruleset_source": "eimyroot/Voodoo-One",
             "ruleset_id": 17,
         },
         {
             "type": "deletion",
             "ruleset_source_type": "Repository",
-            "ruleset_source": "nulleimy/V-One",
+            "ruleset_source": "eimyroot/Voodoo-One",
             "ruleset_id": 17,
         },
     ]
@@ -431,7 +431,7 @@ def test_active_rule_pagination_reads_every_page(monkeypatch: pytest.MonkeyPatch
 
     monkeypatch.setattr(verifier, "github_get", fake_get)
     items, sources = verifier.github_get_list_pages(
-        "https://api.github.com/repos/nulleimy/V-One/rules/branches/main",
+        "https://api.github.com/repos/eimyroot/Voodoo-One/rules/branches/main",
         token=None,
         api_version="2022-11-28",
     )
@@ -457,7 +457,7 @@ def test_check_run_pagination_reads_every_page(monkeypatch: pytest.MonkeyPatch) 
 
     monkeypatch.setattr(verifier, "github_get", fake_get)
     items, sources = verifier.github_get_check_run_pages(
-        "https://api.github.com/repos/nulleimy/V-One/commits/abc/check-runs?check_name=verify&filter=all",
+        "https://api.github.com/repos/eimyroot/Voodoo-One/commits/abc/check-runs?check_name=verify&filter=all",
         token=None,
         api_version="2022-11-28",
     )
@@ -479,9 +479,9 @@ def test_provider_collection_requests_all_matching_check_runs() -> None:
     "url",
     [
         "file:///etc/passwd",
-        "http://api.github.com/repos/nulleimy/V-One",
-        "https://api.github.com.evil.example/repos/nulleimy/V-One",
-        "https://user@example.com@api.github.com/repos/nulleimy/V-One",
+        "http://api.github.com/repos/eimyroot/Voodoo-One",
+        "https://api.github.com.evil.example/repos/eimyroot/Voodoo-One",
+        "https://user@example.com@api.github.com/repos/eimyroot/Voodoo-One",
     ],
 )
 def test_live_verifier_rejects_noncanonical_github_urls(url: str) -> None:
@@ -493,6 +493,15 @@ def test_actions_details_url_must_name_expected_repository() -> None:
     with pytest.raises(verifier.GitHubEvidenceError, match="does not identify"):
         verifier._actions_run_id(
             "https://github.com/other/repo/actions/runs/123/job/456",
-            "nulleimy",
-            "V-One",
+            "eimyroot",
+            "Voodoo-One",
         )
+
+
+def test_actions_details_url_rejects_historical_repository_identity() -> None:
+    for historical in (
+        "https://github.com/eimyroot/V-One/actions/runs/123/job/456",
+        "https://github.com/nulleimy/V-One/actions/runs/123/job/456",
+    ):
+        with pytest.raises(verifier.GitHubEvidenceError, match="does not identify"):
+            verifier._actions_run_id(historical, "eimyroot", "Voodoo-One")

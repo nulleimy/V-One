@@ -17,9 +17,12 @@ from dataclasses import asdict, dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 
-ALLOWED_GITHUB_REPOSITORY = "https://github.com/eimyroot/V-One.git"
+ALLOWED_GITHUB_REPOSITORY = "https://github.com/eimyroot/Voodoo-One.git"
 LEGACY_GITHUB_REPOSITORY_ALIASES = frozenset(
-    {"https://github.com/nulleimy/V-One.git"}
+    {
+        "https://github.com/eimyroot/V-One.git",
+        "https://github.com/nulleimy/V-One.git",
+    }
 )
 CANONICAL_EVIDENCE_ROOT = Path("/Users/eimyna/00_DEV/V-ONE-EVIDENCE")
 DEFAULT_BASE_REF = "origin/main"

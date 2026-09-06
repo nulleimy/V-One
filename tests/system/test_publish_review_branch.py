@@ -105,20 +105,24 @@ def test_policy_accepts_only_review_branches() -> None:
             policy.validate_target_branch(invalid)
 
 
-def test_canonical_repository_identity_allows_only_explicit_legacy_origin_alias() -> None:
+def test_canonical_repository_identity_allows_only_explicit_legacy_origin_aliases() -> None:
     policy = MODULE.PublicationPolicy()
 
-    canonical = "https://github.com/eimyroot/V-One.git"
-    legacy = "https://github.com/nulleimy/V-One.git"
+    canonical = "https://github.com/eimyroot/Voodoo-One.git"
+    legacy_aliases = (
+        "https://github.com/eimyroot/V-One.git",
+        "https://github.com/nulleimy/V-One.git",
+    )
 
     assert canonical == MODULE.ALLOWED_GITHUB_REPOSITORY
+    assert frozenset(legacy_aliases) == MODULE.LEGACY_GITHUB_REPOSITORY_ALIASES
 
     policy.validate_repository_url(canonical)
     policy.validate_origin_fetch_url(canonical, canonical)
-    policy.validate_origin_fetch_url(legacy, canonical)
-
-    with pytest.raises(MODULE.PublicationError, match="not allowlisted"):
-        policy.validate_repository_url(legacy)
+    for legacy in legacy_aliases:
+        policy.validate_origin_fetch_url(legacy, canonical)
+        with pytest.raises(MODULE.PublicationError, match="not allowlisted"):
+            policy.validate_repository_url(legacy)
 
     with pytest.raises(MODULE.PublicationError, match="origin fetch URL"):
         policy.validate_origin_fetch_url(

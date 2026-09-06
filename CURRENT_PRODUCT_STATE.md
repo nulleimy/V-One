@@ -5,8 +5,9 @@
 ## Snapshot identity
 
 ```text
-AS_OF: 2026-08-24
+AS_OF: 2026-09-06
 EXACT_LIVE_GIT_IDENTITY: QUERY_LIVE_GIT_DIRECTLY
+CANONICAL_REPOSITORY: eimyroot/Voodoo-One
 RECONCILIATION_INPUT_HEAD: 3106ba95125a13adb8e0ee867fbf341d2d2e776e
 RECONCILIATION_BASE_MAIN: 3106ba95125a13adb8e0ee867fbf341d2d2e776e
 RECONCILIATION_MERGE: PR #140 / 60bc9c26813ee23c73bac194a9adb27714e8a1e8
@@ -55,7 +56,7 @@ RELEASED / DEPLOYED       = separately governed states
 | Restart-safe durable resume | **IMPLEMENTED / MERGED via PR #140** |
 | Runtime resume wiring | **IMPLEMENTED / MERGED via PR #140** |
 | G7 post-merge verification | **VERIFIED on `main@60bc9c268...` by CI #1015, D4 #202, E3 #193, E4B #189** |
-| GitHub G0 governance | **VERIFIED / PASS** |
+| GitHub G0 governance | **UNKNOWN / fresh post-rename exact-main verification required** |
 | Default provider runtime pack | **DISABLED / FAIL-CLOSED** |
 | Real canonical HTTP READ E2E using default G8 pack | **BLOCKED / NOT YET VERIFIED** |
 | Provider WRITE activation | **BLOCKED** |
@@ -66,9 +67,14 @@ RELEASED / DEPLOYED       = separately governed states
 | Deployment | **NOT PERFORMED** |
 | CyberCore | **BLOCKED pending product/release-governance hardening** |
 
-## G0 live GitHub governance
+## G0 GitHub governance — current vs historical evidence
 
-G0 is no longer an unresolved blocker. The exit gate is tied to identifiable live evidence:
+Current canonical repository identity is `eimyroot/Voodoo-One`. No fresh post-rename G0 run is yet
+retained for the exact current `main` SHA, so current G0 state is deliberately `UNKNOWN` and the
+release-candidate governance gate remains fail-closed until fresh live evidence exists.
+
+The following retained artifact remains valid historical evidence for the repository identity and
+source SHA that existed when it ran:
 
 ```text
 workflow = g0-governance-verify
@@ -80,25 +86,30 @@ artifact = g0-governance-evidence-32553113424-1
 artifact_id = 9470619984
 artifact_digest = sha256:6e63caee23a57613471df66ef0279c0261ed8d375e4c929accdf50eff7dc4f5f
 evidence_json_checksum = 11a99765485b63b70186037011d31c105dea8dd75b689e0036a8766d05e8137d
-verdict = VERIFIED
+historical_verdict = VERIFIED
 ```
 
-The retained evidence verifies PR-only main, required `verify` from workflow `ci`, latest-head strict checks, force-push disabled, branch deletion disabled, conversation resolution, no ordinary admin/ruleset bypass, active rulesets, and verifier source binding.
+That historical evidence verified PR-only main, required `verify` from workflow `ci`, latest-head
+strict checks, force-push disabled, branch deletion disabled, conversation resolution, no ordinary
+admin/ruleset bypass, active rulesets, and verifier source binding for its exact evidence scope. It
+must not be reused as proof for the renamed current repository identity.
 
 ```text
-REPO_ENFORCEMENT_CONTRACT       = VERIFIED
-GITHUB_SETTINGS_ENFORCED        = VERIFIED
-MAIN_PR_ONLY                    = VERIFIED
-REQUIRED_CI                     = VERIFIED
-FORCE_PUSH_DISABLED             = VERIFIED
-BRANCH_DELETE_DISABLED          = VERIFIED
-CONVERSATION_RESOLUTION         = VERIFIED
-ORDINARY_ADMIN_BYPASS_DISABLED  = VERIFIED
-P0_GITHUB_GOVERNANCE            = PASS
-G0                              = PASS
+REPO_ENFORCEMENT_CONTRACT       = IMPLEMENTED
+GITHUB_SETTINGS_ENFORCED        = UNKNOWN
+MAIN_PR_ONLY                    = UNKNOWN_CURRENT_G0
+REQUIRED_CI                     = UNKNOWN_CURRENT_G0
+FORCE_PUSH_DISABLED             = UNKNOWN_CURRENT_G0
+BRANCH_DELETE_DISABLED          = UNKNOWN_CURRENT_G0
+CONVERSATION_RESOLUTION         = UNKNOWN_CURRENT_G0
+ORDINARY_ADMIN_BYPASS_DISABLED  = UNKNOWN_CURRENT_G0
+P0_GITHUB_GOVERNANCE            = BLOCKED_PENDING_FRESH_G0
+G0                              = UNKNOWN
 ```
 
-G0 PASS does not authorize release or deployment.
+A fresh G0 PASS on the exact post-repair `main` SHA may promote these current governance fields back to
+`VERIFIED`; documentation, CI success, or the historical artifact cannot do so by inference. G0 PASS
+does not authorize release or deployment.
 
 ## Canonical shared authority/execution prefix
 
@@ -294,12 +305,13 @@ This historical evidence does not authorize or prove any new provider mutation.
 - Historical PR #125 technical merge/post-state is VERIFIED; separate pre-merge merge-authorization provenance remains **NOT VERIFIED** and is not rewritten.
 - ADR-0018 records the R2 terminal-profile correction instead of silently rewriting older history.
 - PR #128 reconciliation remains historical provenance; later G7 evidence does not rewrite it.
+- Historical G0 run `32553113424` remains retained evidence for its original repository identity and exact source SHA; it is not current post-rename proof.
 
 ## Current release truth
 
 ```text
 VOODOO_ALLOW_PRODUCTION_EFFECTS=false
-G0_GITHUB_GOVERNANCE=PASS
+G0_GITHUB_GOVERNANCE=UNKNOWN
 G7_CANONICAL_READ_API=MERGED
 G7_RESTART_SAFE_RESUME=MERGED
 G8_DEFAULT_READ_RUNTIME=OFF

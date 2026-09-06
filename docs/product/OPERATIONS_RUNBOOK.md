@@ -93,7 +93,7 @@ or enable production effects. From any authenticated GitHub CLI working director
 current candidate with:
 
 ```bash
-gh workflow run release-candidate.yml --repo nulleimy/V-One --ref main \
+gh workflow run release-candidate.yml --repo eimyroot/Voodoo-One --ref main \
   -f version=0.9.0-rc2 -f confirmation=BUILD_RC
 ```
 
@@ -103,7 +103,7 @@ directory. Replace `RUN_ID` with the successful workflow run ID:
 ```bash
 mkdir -p /tmp/v-one-rc-verify
 cd /tmp/v-one-rc-verify
-gh run download RUN_ID --repo nulleimy/V-One --name v-one-0.9.0-rc2 --dir .
+gh run download RUN_ID --repo eimyroot/Voodoo-One --name v-one-0.9.0-rc2 --dir .
 sha256sum --check SHA256SUMS.txt
 ```
 
@@ -114,10 +114,15 @@ attestations are generated and independently verified.
 ## Database migrations
 
 SQLite migrations run automatically and atomically before the application starts accepting traffic.
-The health response must report `database_backend: sqlite` and `schema_version: 9`. Never edit an
-applied migration: its SHA-256 checksum is part of the database history and drift blocks startup.
-Database unavailability or migration-history drift returns HTTP `503`, which makes the container
-healthcheck fail instead of reporting a false-positive HTTP success.
+The health response must report `database_backend: sqlite` and a `schema_version` equal to the highest
+contiguous migration version bundled in the exact deployed artifact. Do not hard-code an expected
+schema number in operational automation: derive or verify it from the artifact's
+`voodoo_product/migrations/sqlite` set and reconcile it with `docs/product/DATABASE_MIGRATIONS.md`.
+For the current source tree the highest bundled migration is `0014_workspace_memberships.sql`, so the
+current expected schema is 14. Never edit an applied migration: its SHA-256 checksum is part of the
+database history and drift blocks startup. Database unavailability or migration-history drift returns
+HTTP `503`, which makes the container healthcheck fail instead of reporting a false-positive HTTP
+success.
 
 For an upgrade:
 
@@ -128,8 +133,8 @@ For an upgrade:
 4. Copy the database, `-wal` and `-shm` files as one consistent backup set.
 5. Deploy the new immutable application artifact while keeping production effects disabled.
 6. Start exactly one instance and wait for migration completion.
-7. Verify `/api/v1/health` reports `HEALTHY`, `sqlite`, schema version `9`, and production effects
-   `DISABLED`.
+7. Verify `/api/v1/health` reports `HEALTHY`, `sqlite`, the highest contiguous migration version
+   bundled in that exact artifact, and production effects `DISABLED`.
 8. Run the authenticated `/api/v1/evidence/verify` operation again, then start the remaining
    instances.
 
