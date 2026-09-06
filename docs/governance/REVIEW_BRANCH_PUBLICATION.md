@@ -13,7 +13,7 @@ Skript odmítne pokračovat, pokud:
 - pracovní strom není čistý,
 - `HEAD` neodpovídá explicitnímu úplnému SHA,
 - neprojde SHA-256 kontrola obou kanonických ústav,
-- publication target URL není přesně `https://github.com/eimyroot/V-One.git`, nebo `origin` fetch URL není canonical URL ani explicitně povolený legacy alias `https://github.com/nulleimy/V-One.git`,
+- publication target URL není přesně `https://github.com/eimyroot/Voodoo-One.git`, nebo `origin` fetch URL není canonical URL ani explicitně povolený fetch-only legacy alias `https://github.com/eimyroot/V-One.git` / `https://github.com/nulleimy/V-One.git`,
 - cílová větev nezačíná `review/`,
 - cílová větev je chráněná nebo má neplatný Git ref,
 - `HEAD` není potomkem zadaného base refu,
@@ -25,7 +25,9 @@ Skript odmítne pokračovat, pokud:
 - chybí přesná autorizační věta,
 - vzdálené SHA po publikaci neodpovídá publikovanému `HEAD`.
 
-Skript nepoužívá force push a nemění konfiguraci repozitáře.
+Skript nepoužívá force push a nemění konfiguraci repozitáře. Legacy URL jsou přijatelné pouze jako
+zdrojová `origin` fetch identita pro existující managed worktrees; nikdy nejsou povoleným publication
+targetem.
 
 Publikace aktuálně podporuje přesně base ref `origin/main`. Jiná hodnota
 `--base-ref` je odmítnuta před freshness fetch.
