@@ -1,12 +1,12 @@
 # GitHub Main Governance Baseline v1
 
-Status: PREPARED — repository-side contract repaired for `eimyroot/Voodoo-One`; fresh live G0 verification required
+Status: VERIFIED — fresh exact-main G0 evidence retained for `eimyroot/Voodoo-One`
 
 ## Purpose
 
 Define the minimum GitHub repository enforcement required before higher-impact V-One authority, Grant Issuer, Runner, release, or production-capable work may rely on GitHub as a governance boundary.
 
-This document does not claim that GitHub Settings are already enforced. Remote enforcement must be verified independently against the live repository configuration.
+Current live enforcement is VERIFIED only for the exact evidence scope recorded below. Remote enforcement must be re-verified independently after repository-identity, ruleset or required-check changes.
 
 ## Canonical protected branch
 
@@ -74,6 +74,34 @@ source = GitHub live repository settings/API
 ```
 
 A repository document, CI pass, issue, PR description or previous observation is not sufficient evidence of GitHub-side enforcement. A repository rename or transfer changes the identity being verified: a historical G0 PASS for a different repository identity remains historical evidence and is not reusable as current G0 proof.
+
+## Current retained G0 evidence
+
+The current exact-main verification is:
+
+```text
+workflow = g0-governance-verify
+run = 34031128405
+repository = eimyroot/Voodoo-One
+branch = main
+branch_head_sha = a7e7c075dc44d61d4f7e8870cc3c0580ff290c2c
+verifier_source_sha = a7e7c075dc44d61d4f7e8870cc3c0580ff290c2c
+required_status_check = verify
+observed_required_workflow = ci
+observed_required_workflow_path = .github/workflows/ci.yml
+artifact = g0-governance-evidence-34031128405-1
+artifact_id = 9988632821
+artifact_digest = sha256:be646405590ac07f6293eaeb94a72c77ecf8ea02c16a31b31ccf93ef4ec92a2c
+checksum_validation = PASS
+verdict = VERIFIED
+verified_at = 2026-09-06T11:45:16.520493Z
+```
+
+The evidence reported every required G0 check as true, including PR-only main, strict/latest-head
+required checks, GitHub Actions provider/workflow identity, force-push and branch deletion disabled,
+conversation resolution, complete bypass evidence with no ordinary bypass actor, active rulesets and
+exact verifier-source binding. This evidence is current only for its exact scope; later relevant
+GitHub/repository changes require fresh live G0 verification.
 
 ## Machine verification
 
@@ -207,4 +235,4 @@ ORDINARY_ADMIN_BYPASS_DISABLED = VERIFIED
 P0_GITHUB_GOVERNANCE = PASS
 ```
 
-Until all fields are proven, authority/Runner work may be designed or prepared but must not treat GitHub enforcement as a trusted completed boundary.
+Current fresh evidence satisfies the exit gate for exact `main@a7e7c075dc44d61d4f7e8870cc3c0580ff290c2c`. Later relevant repository or GitHub-governance changes require a new exact-main G0 observation rather than inference from this artifact.
