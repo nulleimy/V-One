@@ -69,7 +69,7 @@ OperationProof != OperationCell
 | Canonical FastAPI ProductComposition runtime seam | IMPLEMENTED / MERGED; explicit runtime factory required, default provider pack disabled |
 | Canonical public READ operation API | IMPLEMENTED / MERGED via PR #137; reconciled with resume/runtime via PR #140 |
 | Restart-safe durable READ resume | IMPLEMENTED / MERGED via PR #140 |
-| GitHub main governance enforcement | VERIFIED / G0 PASS from retained live verifier evidence |
+| GitHub main governance enforcement | UNKNOWN / fresh post-rename G0 required; historical VERIFIED evidence retained |
 | Default provider runtime pack | BLOCKED / disabled until G8 |
 | Real canonical HTTP READ E2E through default G8 pack | BLOCKED / not yet verified |
 | Provider WRITE activation | BLOCKED pending repeated READ E2E + restart-safe verification gate |
@@ -157,8 +157,8 @@ deployment, or release.
 
 ## G0 governance evidence
 
-The former GitHub-governance blocker is closed by retained live verifier evidence, not by documentation
-or ordinary CI inference:
+The repository retains historical live G0 evidence for the repository identity that was current when
+the run executed:
 
 ```text
 workflow = g0-governance-verify
@@ -169,8 +169,11 @@ artifact_digest = sha256:6e63caee23a57613471df66ef0279c0261ed8d375e4c929accdf50e
 verdict = VERIFIED
 ```
 
-This evidence established the G0 PASS controls in the current-state documents. G0 PASS remains separate
-from provider runtime, release, and deployment authorization.
+That artifact remains valid historical evidence only. The canonical repository is now
+`eimyroot/Voodoo-One`; current G0 governance is therefore `UNKNOWN` until a fresh
+`g0-governance-verify` run executes on the exact post-repair `main` SHA and independently verifies the
+current repository identity and live ruleset. Historical G0 PASS never authorizes provider runtime,
+release, or deployment.
 
 ## READ before WRITE
 
@@ -218,7 +221,7 @@ a new provider mutation is authorized.
 - default G8 provider runtime and real product HTTP READ E2E remain blocked/unverified;
 - provider WRITE remains blocked behind READ-before-WRITE evidence and separate effect authorization;
 - no release/deployment inferred from CI, merge, Proof or Cell;
-- GitHub main governance enforcement has retained live G0 VERIFIED evidence.
+- historical G0 VERIFIED evidence is retained, while current post-rename GitHub governance remains UNKNOWN until fresh exact-main verification.
 
 ## Documentation
 
