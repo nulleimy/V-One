@@ -338,5 +338,3 @@ Console: `http://127.0.0.1:8000/console`
 
 See [`SECURITY.md`](SECURITY.md), [`CONTRIBUTING.md`](CONTRIBUTING.md), and
 [`COMMERCIAL_READINESS.md`](docs/product/COMMERCIAL_READINESS.md).
-
-<!-- pr160-ci-trigger-transient -->
