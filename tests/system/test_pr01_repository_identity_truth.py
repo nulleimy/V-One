@@ -114,7 +114,7 @@ def test_operations_runbook_uses_current_repo_and_artifact_derived_schema_truth(
     assert "--repo nulleimy/V-One" not in runbook
     assert "schema_version: 9" not in runbook
     assert "schema version `9`" not in runbook
-    assert "highest contiguous migration version bundled" in runbook
+    assert "contiguous migration version bundled in the exact deployed artifact" in runbook
     assert "0014_workspace_memberships.sql" in runbook
     assert "current expected schema is 14" in runbook
 
