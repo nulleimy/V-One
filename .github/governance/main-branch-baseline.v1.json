@@ -1,6 +1,6 @@
 {
   "schema": "vone.github-main-governance/v1",
-  "repository": "eimyroot/V-One",
+  "repository": "eimyroot/Voodoo-One",
   "branch": "main",
   "desired": {
     "pull_request_required": true,
