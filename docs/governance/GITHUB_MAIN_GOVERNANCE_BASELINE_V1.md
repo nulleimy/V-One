@@ -1,6 +1,6 @@
 # GitHub Main Governance Baseline v1
 
-Status: PREPARED — repository-side contract with fail-closed live verifier
+Status: PREPARED — repository-side contract repaired for `eimyroot/Voodoo-One`; fresh live G0 verification required
 
 ## Purpose
 
@@ -50,7 +50,7 @@ Product/runtime rule `no requester self-approval` remains a separate V-One autho
 P0 is complete only when live GitHub configuration evidence proves the desired state. Acceptable evidence must include:
 
 ```text
-repository = nulleimy/V-One
+repository = eimyroot/Voodoo-One
 branch = main
 branch_head_sha = <exact current main sha>
 verifier_source_sha = <same exact current main sha>
@@ -73,7 +73,7 @@ verified_at = <timestamp>
 source = GitHub live repository settings/API
 ```
 
-A repository document, CI pass, issue, PR description or previous observation is not sufficient evidence of GitHub-side enforcement.
+A repository document, CI pass, issue, PR description or previous observation is not sufficient evidence of GitHub-side enforcement. A repository rename or transfer changes the identity being verified: a historical G0 PASS for a different repository identity remains historical evidence and is not reusable as current G0 proof.
 
 ## Machine verification
 
@@ -152,7 +152,7 @@ Examples that are `BLOCKED` when evidence is otherwise complete:
 - PR-only flow, force-push blocking, deletion blocking or thread resolution is absent;
 - any bypass actor is configured.
 
-Only `VERIFIED` exits successfully. `BLOCKED` and `UNKNOWN` fail closed. A historical PASS is not reusable proof after GitHub ruleset/settings configuration changes.
+Only `VERIFIED` exits successfully. `BLOCKED` and `UNKNOWN` fail closed. A historical PASS is not reusable proof after GitHub ruleset/settings configuration changes or repository-identity changes.
 
 ## Credential boundary
 
