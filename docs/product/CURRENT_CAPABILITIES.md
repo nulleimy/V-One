@@ -85,19 +85,19 @@ Is it released/deployed?
 | OperationProof/v2 | VERIFIED | current contract/tests + historical F6b digest | mutation-only post-verification lineage |
 | OperationCell/v1 | VERIFIED | current contract/tests + historical F6b digest | mutation-only stable operation atom |
 | Unified authority→profile runtime composition | IMPLEMENTED | ProductComposition + canonical runtime tests + PR #140 | public READ API merged; default provider pack still off |
-| Receipt/audit hash-chain integrity | VERIFIED | ledger verification tests | chain integrity != independent provider verification |
+| Receipt/audit hash-chain integrity | VERIFIED | ledger verification tests | chain integrity != independent verification |
 | SQLite migrations | VERIFIED | migrations 0001–0014 + integrity tests | single-node backend |
 | PostgreSQL backend | BLOCKED | fail-closed startup contract | adapter/concurrency/operations gates not released |
 | OIDC identity provider | BLOCKED | fail-closed configuration tests | no released external identity runtime |
 | Security Intelligence R-SI1.1 | IMPLEMENTED | metadata + tests | intelligence-only; no execution/proof authority |
 | Security Intelligence R-SI1.2 normalization | IMPLEMENTED | merged PR #135 | descriptive/context-only; no authority/runtime/effect widening |
 | CyberCore integration | BLOCKED | product/release-governance hardening | cannot bypass V-One gates |
-| Main GitHub governance policy | UNKNOWN | historical G0 run `32553113424` remains VERIFIED for its original evidence scope | fresh exact-main G0 is required for current `eimyroot/Voodoo-One` identity |
-| Main required latest-head enforcement | UNKNOWN | historical G0 verified PR-only main, required `verify`, latest-head strict checks and no ordinary bypass for its then-current repository identity | current post-rename enforcement must be re-verified live |
+| Main GitHub governance policy | VERIFIED | fresh G0 run `34031128405` on exact `main@a7e7c075dc44d61d4f7e8870cc3c0580ff290c2c`; artifact digest `sha256:be646405590ac07f6293eaeb94a72c77ecf8ea02c16a31b31ccf93ef4ec92a2c` | release/deploy remain separate gates |
+| Main required latest-head enforcement | VERIFIED | fresh G0 verified PR-only main, required `verify` from `ci`, latest-head strict checks, no ordinary bypass, force-push/deletion disabled | later repository/ruleset changes require fresh live evidence for their own exact scope |
 | G8 default READ provider runtime | BLOCKED | G8 gate defined; no default runtime activation yet | must be READ-only, explicit, separate Runner/Verifier credentials, fail-closed |
 | Real canonical HTTP READ E2E + restart resume | BLOCKED | G7 components merged; G8 runtime not yet active | must prove HTTP→Runner→independent `VerificationResult/v1` plus no duplicate authority/effect after restart |
 | Provider WRITE activation | BLOCKED | ADR-0019 safety decision is under governed adoption | not eligible before verified repeated READ E2E + restart-safe continuity |
-| Release-candidate build | VERIFIED | fail-closed workflow + historical image/SBOM checks | build candidate != deployment; current RC construction is additionally blocked until fresh current G0 succeeds |
+| Release-candidate build | VERIFIED | fail-closed workflow + historical image/SBOM checks; current G0 blocker closed by fresh exact-main evidence | build candidate != deployment; remaining release-candidate gates still apply |
 | Unrestricted production release | BLOCKED | production effects default disabled | G8 + real READ E2E + security/legal/ops/release gates remain |
 | Public commercial distribution | BLOCKED | no distribution authorization | licensing/EULA/privacy/support and production gates remain separate |
 
@@ -177,11 +177,29 @@ membership is a scope check, not activation of the separately PROPOSED Solo/Team
 
 ## G0 governance evidence — current vs historical
 
-Current canonical repository identity is `eimyroot/Voodoo-One`. A fresh post-rename G0 observation on
-the exact current `main` SHA has not yet been retained, so current GitHub governance status is
-`UNKNOWN` and must fail closed for release-candidate promotion.
+Current canonical repository identity is `eimyroot/Voodoo-One`. Fresh post-rename G0 evidence is
+retained for the exact repaired `main` SHA:
 
-The following retained artifact remains VERIFIED historical evidence for the exact repository identity
+```text
+workflow = g0-governance-verify
+run = 34031128405
+event = workflow_dispatch
+source_sha = a7e7c075dc44d61d4f7e8870cc3c0580ff290c2c
+branch_head_sha = a7e7c075dc44d61d4f7e8870cc3c0580ff290c2c
+verifier_source_sha = a7e7c075dc44d61d4f7e8870cc3c0580ff290c2c
+artifact = g0-governance-evidence-34031128405-1
+artifact_id = 9988632821
+artifact_digest = sha256:be646405590ac07f6293eaeb94a72c77ecf8ea02c16a31b31ccf93ef4ec92a2c
+checksum_validation = PASS
+verdict = VERIFIED
+verified_at = 2026-09-06T11:45:16.520493Z
+```
+
+The fresh evidence verifies PR-only main, required `verify` from GitHub Actions workflow `ci`, exact
+workflow path `.github/workflows/ci.yml`, latest-head strict checks, force-push and deletion disabled,
+conversation resolution, no ordinary bypass, active rulesets and exact source binding.
+
+The earlier retained artifact remains VERIFIED historical evidence for the exact repository identity
 and source SHA that existed when it ran:
 
 ```text
@@ -196,11 +214,9 @@ evidence_json_checksum = 11a99765485b63b70186037011d31c105dea8dd75b689e0036a8766
 historical_verdict = VERIFIED
 ```
 
-That historical evidence verified PR-only main, required `verify` from workflow `ci`, latest-head
-strict checks, force-push and deletion disabled, conversation resolution, no ordinary bypass, active
-rulesets, and source binding for its exact evidence scope. It is not current post-rename proof. A fresh
-G0 PASS on the exact repaired `main` may promote current GitHub governance back to `VERIFIED`; G0 never
-authorizes release/deploy by itself.
+Historical evidence stays historical. Current G0 is VERIFIED only because the fresh exact-main run
+independently proved the renamed repository and live controls. G0 never authorizes release/deploy by
+itself.
 
 ## Verified historical complete operation atom
 
@@ -232,7 +248,7 @@ This is historical evidence for one real atom. It does not execute or authorize 
 VOODOO_ALLOW_PRODUCTION_EFFECTS=false
 NEW_G7_PROVIDER_WRITE=NO
 NEW_A09_PROVIDER_MUTATION=NO
-G0_LIVE_ENFORCEMENT_VERIFIED=UNKNOWN_CURRENT
+G0_LIVE_ENFORCEMENT_VERIFIED=YES
 G8_DEFAULT_PROVIDER_RUNTIME=OFF
 REAL_CANONICAL_READ_E2E_VERIFIED=NO
 WRITE_RUNTIME_GATE=BLOCKED
