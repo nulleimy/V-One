@@ -104,7 +104,7 @@ def test_governance_and_publication_docs_bind_current_repository_identity() -> N
 
     assert "repository = eimyroot/Voodoo-One" in governance
     assert "repository = nulleimy/V-One" not in governance
-    assert "latest retained G0 evidence" in governance.lower()
+    assert "latest retained g0 evidence" in governance.lower()
     assert "CURRENT_LIVE_G0 = DERIVED / QUERY_ONLY" in governance
     assert LATEST_RETAINED_G0_RUN in governance
     assert LATEST_RETAINED_G0_SOURCE_SHA in governance
@@ -149,7 +149,7 @@ def test_versioned_truth_uses_retained_g0_evidence_without_self_invalidating_cur
     assert LATEST_RETAINED_G0_ARTIFACT_DIGEST in capabilities
     assert "historical_verdict = VERIFIED" in capabilities
 
-    assert "latest retained G0 evidence" in readme.lower()
+    assert "latest retained g0 evidence" in readme.lower()
     assert "CURRENT_LIVE_G0=DERIVED_QUERY_ONLY" in readme
     assert LATEST_RETAINED_G0_RUN in readme
     assert LATEST_RETAINED_G0_SOURCE_SHA in readme
